@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-MStream.Client-CB1EEDAF-3790-4B51-B5F4-409CF87EFB89</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="google.protobuf" Version="3.19.4" />
+    <PackageReference Include="Grpc.net.client" Version="2.42.0" />
+    <PackageReference Include="grpc.tools" Version="2.43.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProtoBuf Include="..\MStream.Contract\dataSrv.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+</Project>

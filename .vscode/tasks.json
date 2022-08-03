@@ -1,0 +1,150 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Client",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/MStream.Client/MStream.Client.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Build Srv",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/MStream.Srv/MStream.Srv.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/MStream.Srv/MStream.Srv.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/src/MStream.Srv/MStream.Srv.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/MStream.Srv/MStream.Srv.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: debug",
+            "dependsOn": [
+                "build"
+            ],
+            "dockerBuild": {
+                "tag": "ftagrpcsample:dev",
+                "target": "base",
+                "dockerfile": "${workspaceFolder}/src/MStream.Srv/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/MStream.Srv/MStream.Srv.csproj"
+            }
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: release",
+            "dependsOn": [
+                "build"
+            ],
+            "dockerBuild": {
+                "tag": "ftagrpcsample:latest",
+                "dockerfile": "${workspaceFolder}/src/MStream.Srv/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/MStream.Srv/MStream.Srv.csproj"
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: debug",
+            "dependsOn": [
+                "docker-build: debug"
+            ],
+            "dockerRun": {
+                "env": {
+                    "ASPNETCORE_URLS": "https://+:5001;http://+:5000"
+                },
+                "ports": [{
+                    "containerPort": 5000,
+                    "hostPort": 5000,
+                    "protocol": "tcp"
+                },
+                {
+                    "containerPort": 5001, 
+                    "hostPort": 5001,
+                    "protocol": "tcp"
+                }]
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/MStream.Srv/MStream.Srv.csproj",
+                "enableDebugging": true, 
+                "configureSsl": true
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: release",
+            "dependsOn": [
+                "docker-build: release"
+            ],
+            "dockerRun": {
+                "env": {
+                    "ASPNETCORE_URLS": "https://+:5001;http://+:5000"
+                },
+                "ports": [{
+                    "containerPort": 5000,
+                    "hostPort": 5000,
+                    "protocol": "tcp"
+                },
+                {
+                    "containerPort": 5001, 
+                    "hostPort": 5001,
+                    "protocol": "tcp"
+                }]
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/MStream.Srv/MStream.Srv.csproj"
+            }
+        }
+    ]
+}

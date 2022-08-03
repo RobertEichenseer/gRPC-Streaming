@@ -1,0 +1,73 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Client",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build Client",
+            "program": "${workspaceFolder}/src/MStream.Client/bin/Debug/net6.0/MStream.Client.dll",
+            "args": [
+                "getStream",
+                "-v"
+            ],
+            "env": {
+                "MSTREAM_SERVERURL": "https://localhost:5001"
+            },
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Launch Srv",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build Srv",
+            "program": "${workspaceFolder}/src/MStream.Srv/bin/Debug/net6.0/MStream.Srv.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/MStream.Srv",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://*:5001;http://*:5000"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        },
+        {
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/MStream.Srv/bin/Debug/net6.0/MStream.Srv.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/MStream.Srv",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Docker Launch Server",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/MStream.Srv/MStream.Srv.csproj"
+            }
+        }
+    ]
+}

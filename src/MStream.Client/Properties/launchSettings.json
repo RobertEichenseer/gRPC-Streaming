@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "MStream.Client": {
+      "commandName": "Project",
+      "commandLineArgs": "stream",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true
+    }
+  }
+}

@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option csharp_namespace = "MStream.ServiceDefinition";
+
+package MsgBroker;
+
+service Ingest {
+  rpc SendDataPackage (SendDataPackage_Request) returns (SendDataPackage_Response);
+  rpc SendDataPackagesStream (stream SendDataPackage_Request) returns (SendDataPackage_Response);
+}
+
+service Egress {
+    rpc GetDataPackagesStream (GetDataPackage_Request) returns (stream GetDataPackage_Response);
+}
+
+// Egress Telemtry
+message GetDataPackage_Request {
+    string tagName = 2;
+    string trackingGuid = 4;
+}
+
+message GetDataPackage_Response {
+    bool IsSuccess = 1;
+    string LastError = 2;
+    string trackingGuid = 3;
+    string tagName = 4;
+    string tagValue = 5;
+}
+
+// Ingest Telemtry
+message SendDataPackage_Request {
+    string telemetryGuid = 1;    
+    string tagName = 2;
+    string tagValue = 3;
+    string trackingGuid = 4;
+}
+
+message SendDataPackage_Response {
+    bool IsSuccess = 1;
+    string LastError = 2;
+    string trackingGuid = 3;
+    int64 dataPackageCount = 4; 
+}

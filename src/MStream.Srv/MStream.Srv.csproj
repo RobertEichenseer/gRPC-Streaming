@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>a2b1073e8afb17315fffd17ada195825</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\MStream.Contract\dataSrv.proto" GrpcServices="Server" /> 
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="google.protobuf" Version="3.19.4" />-->
+    <PackageReference Include="Grpc.AspNetCore" Version="2.42.0" />
+    <PackageReference Include="grpc.aspnetcore.server.reflection" Version="2.42.0" />
+    <PackageReference Include="grpc.tools" Version="2.43.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
