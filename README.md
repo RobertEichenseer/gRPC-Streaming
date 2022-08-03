@@ -9,7 +9,7 @@
 ![](./images/Overview.png)
 
 ### Protocol Buffers Contract (proto file)
-The proto file defines two services (Ingest & Egress) and thre rpc functions: 
+The proto file defines two services (Ingest & Egress) and three rpc functions: 
 ```
 service Ingest {
   rpc SendDataPackage (SendDataPackage_Request) returns (SendDataPackage_Response);
